@@ -1,2 +1,2 @@
 # auto-organizer
-A python tool that organizes files by type
+**A python tool that organizes files by type.**
