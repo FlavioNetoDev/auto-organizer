@@ -1,32 +1,43 @@
-import pathlib
+from pathlib import Path
 import shutil
-print('====== AUTO ORGANIZADOR ======')
-print()
-print('1 - Organizar imagens \n2 - Organizar documentos \n3 - Sair')
+print('====== AUTO-ORGANIZER ======')
+downloads = Path.home() / 'Downloads'
+nome = input('Digite o nome do arquivo: ')
+arquivo = downloads / nome
 
-opc = int(input('Escolha uma opção: '))
-
-if opc == 1:
-    print('Você escolheu organizar imagens')
-    arqv = input('Digite o nome do arquivo que deseja organizar: ').lower()
-    if arqv.endswith('.png') or arqv.endswith('.jpg'):
-        print('Tipo de arquivo: Imagem ')
-        print('Esse arquvio deve ficar na pasta imagens ')
+if arquivo.is_file():
+    print('Arquivo encontrado!')
+    if arquivo.suffix.lower() == '.png' or arquivo.suffix.lower() == '.jpg':
+        print('O arquivo é uma imagem.')
+        pasta = downloads / 'Imagens'
+        pasta.mkdir(exist_ok=True)
+        destino = pasta / nome
+        if destino.exists():
+            print('O arquivo ja existe na pasta')
+        else:
+            shutil.move(arquivo, pasta)
+            print('Arquivo movido para a pasta {}'.format(pasta))
+    elif arquivo.suffix.lower() == '.pdf' or arquivo.suffix.lower() == '.doc' or arquivo.suffix.lower() == '.txt':
+        print('O arquivo é um documento')
+        pasta = downloads / 'Documentos'
+        pasta.mkdir(exist_ok=True)
+        destino = pasta / nome
+        if destino.exists():
+            print('O arquivo ja existe na pasta')
+        else:
+            shutil.move(arquivo, pasta)
+            print('Arquivo movido para a pasta {}'.format(pasta))
+    elif arquivo.suffix.lower() == '.mp3' or arquivo.suffix.lower() == '.wav':
+        print('O arquivo é uma faixa de audio')
+        pasta = downloads / 'Sons'
+        pasta.mkdir(exist_ok=True)
+        destino = pasta / nome
+        if destino.exists():
+            print('O arquivo ja existe na pasta')
+        else:
+            shutil.move(arquivo, pasta)
+            print('Arquivo movido para a pasta {}'.format(pasta))
     else:
-        print('O arquivo não é uma imagem ')
-        exit()
-elif opc == 2:
-    print('Você escolheu organizar documentos')
-    arqv2 = input('Digite o nome do arquivo que deseja organizar: ').lower()
-    if arqv2.endswith('.pdf') or arqv2.endswith('.txt'):
-        print('Tipo de arquivo: Documento ')
-        print('Esse arquivo deve ficar na pasta documentos. ')
-    else:
-        print('O arquivo não é um documento ')
-        exit()
-elif opc == 3:
-    print('Fechando o programa...')
-    exit()
+        print('Tipo de arquivo não reconhecido.')
 else:
-    print('Número inválido ')
-    exit()
+    print('Arquivo não encontrado')
